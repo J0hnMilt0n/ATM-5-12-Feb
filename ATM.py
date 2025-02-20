@@ -1,9 +1,11 @@
+from datetime import datetime
 exit = True
 inserted = False
 balance = 20000
 actual_pin = None
 blocked = False
 attempt = 0
+transactions = []
 while True:
     if not inserted:
         print('Welcome to SBI')
@@ -36,6 +38,7 @@ while True:
                     amount = int(input("Enter the amount :"))
                     if amount % 100 == 0:
                         balance += amount
+                        transactions.append(amount)
                         print("Cash has been Accepted")
                         print("Available Balance = ",balance)
                     else:
@@ -46,12 +49,33 @@ while True:
                     if amount<balance:
                         if amount % 100 == 0:
                             balance -= amount
+                            transactions.append(-amount)
                             print("Take the Cash")
                             print("Available Balance = ",balance)
                         else:
                             print("Enter only multiples of hundred")
                     else:
                         print("Insufficient Balance")
+                if option == 3:
+                    datetim = datetime.now()
+                    date = datetim.strftime('%d-%m-%Y')
+                    time = datetim.strftime('%I:%M %p')
+                    print(
+
+                        f"""
+                    State Bank of India
+Date: {date}                        Time: {time}
+
+Last Transactions : """)
+                    for transaction in transactions:
+                        print(f"""                   {transaction}""")
+                
+                    print(f"""
+Available Balance                {balance}                                    
+
+
+"""
+                    )
                 if option == 4:
                     actual_pin = int(input("Enter New PIN"))
 
@@ -62,3 +86,5 @@ while True:
                     blocked = True
     else:
         inserted = False
+    
+    
